@@ -11,6 +11,7 @@
     <link href="{{asset('public/backend/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
 	<link href="{{asset('public/backend/vendor/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
     <link href="{{asset('public/backend/css/style.css')}}" rel="stylesheet">
+    <script src="{{asset('public/backend/vendor/jquery/jquery.min.js')}}"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -70,13 +71,6 @@
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
-							<li class="nav-item">
-								<div class="input-group search-area d-xl-inline-flex d-none">
-									<div class="input-group-append">
-										<span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
-									</div>
-								</div>
-							</li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
                                     <?php
@@ -196,58 +190,74 @@
     <script src="{{asset('public/backend/js/custom.min.js')}}"></script>
 	<script src="{{asset('public/backend/js/deznav-init.js')}}"></script>
 	<script src="{{asset('public/backend/vendor/owl-carousel/owl.carousel.js')}}"></script>
-	
+
 	<!-- Chart piety plugin files -->
     <script src="{{asset('public/backend/vendor/peity/jquery.peity.min.js')}}"></script>
 	
 	<!-- Apex Chart -->
 	<script src="{{asset('public/backend/vendor/apexchart/apexchart.js')}}"></script>
+    <script src="{{asset('public/backend/vendor/chart.js/Chart.bundle.min.js')}}"></script>
+    <script src="{{asset('public/backend/js/plugins-init/chartjs-init.js')}}"></script>
 	
 	<!-- Dashboard 1 -->
 	<script src="{{asset('public/backend/js/dashboard/dashboard-1.js')}}"></script>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	
-	<script>
-		function carouselReview(){
-			/*  event-bx one function by = owl.carousel.js */
-			jQuery('.event-bx').owlCarousel({
-				loop:true,
-				margin:30,
-				nav:true,
-				center:true,
-				autoplaySpeed: 3000,
-				navSpeed: 3000,
-				paginationSpeed: 3000,
-				slideSpeed: 3000,
-				smartSpeed: 3000,
-				autoplay: false,
-				navText: ['<i class="fa fa-caret-left" aria-hidden="true"></i>', '<i class="fa fa-caret-right" aria-hidden="true"></i>'],
-				dots:true,
-				responsive:{
-					0:{
-						items:1
-					},
-					720:{
-						items:2
-					},
-					
-					1150:{
-						items:3
-					},			
-					
-					1200:{
-						items:2
-					},
-					1749:{
-						items:3
-					}
-				}
-			})			
-		}
-		jQuery(window).on('load',function(){
-			setTimeout(function(){
-				carouselReview();
-			}, 1000); 
-		});
-	</script>
+	
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    setStatistic();
+    function setStatistic(){
+      var _token = $('input[name="_token"]').val();
+      console.log(_token)
+      $.ajax({
+        url: '{{url('/load_statistic')}}',
+        method: "POST",
+        dataType: 'JSON',
+        data:{_token:_token},
+        success:function(data){
+            const ctx = $('#myChart');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: data.series,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>

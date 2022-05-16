@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-
+use Carbon\Carbon;
 use App\Http\Requests;
 use Session;
 use Illuminate\Support\Facades\Redirect;
@@ -50,6 +50,31 @@ class admincontroller extends Controller
             return Redirect::to('/admin');
         }
        
+    }
+
+    public function load_statistic(){
+    	$now = Carbon::now('Asia/Ho_Chi_Minh');
+    	$first_day=Carbon::create(Carbon::now()->year, 1, 1);
+
+    	$revenue = DB::table('tbl_order')
+    	->whereBetween('created_at', [ $first_day, $now])
+    	->select(DB::raw('COUNT(order_id) as soluong, MONTH(created_at) as Thang'))->groupBy('Thang')
+    	->get();
+
+    	$labels=array();
+    	$series=array();
+    	foreach ($revenue as $key => $value) {
+    		$labels[]='Tháng '.$value->Thang;
+    		$series[]=$value->soluong;
+    	}
+    	$chart_data = array(
+    		'labels' => $labels,
+    		'series' => $series
+    	);
+
+        //print_r($chart_data);
+
+    	echo $data = json_encode($chart_data);
     }
 
     public function logout(){

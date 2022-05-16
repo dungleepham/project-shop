@@ -60,7 +60,7 @@
 									</div>
 									<div class="profile-details">
                                     @foreach($thongtinKhach as $key => $values)
-                                    @endforeach
+                                    
 										<div class="profile-name px-3 pt-2">
                                             <p>Tên Khách hàng</p>
 											<h4 class="text-primary mb-0">{{$values->customer_name}}</h4>
@@ -69,7 +69,7 @@
 											<p>Số điện thoại</p>
                                             <h4 class="text-muted mb-0">{{$values->customer_phone}}</h4>
 										</div>
-                                        
+                                    @endforeach    
 									</div>
                                     <div class="bootstrap-badge" style="float:right">
                                         <a href="{{URL::to('/trang-chu')}}" class="badge badge-info">Trở lại trang chủ</a>

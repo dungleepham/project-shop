@@ -46,6 +46,8 @@ Route::get('/admin', [admincontroller::class, 'index'] );
 Route::get('/dashboard', [admincontroller::class, 'show_dashboard']);
 Route::post('/admin-dashboard', [admincontroller::class, 'dashboard']);
 Route::get('/logout', [admincontroller::class, 'logout']);
+Route::post('/load_statistic', [admincontroller::class, 'load_statistic']);
+
 
 
 //category product
