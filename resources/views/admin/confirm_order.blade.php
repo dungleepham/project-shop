@@ -45,7 +45,7 @@
                                             <tr>
                                                
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->customer_name}}</span></div></td>
-                                                <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}}</span></div></td>
+                                                <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}} VND</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>
                                                
                                                 <td>

@@ -113,7 +113,7 @@
                          <ul class="sub">
                             <li><a href="{{URL::to('/manage-order')}}">Đơn hàng chờ</a></li>
 							<li><a href="{{URL::to('/view-confirm-order')}}">Đơn hàng đã xác nhận</a></li>
-                        
+                            <li><a href="{{URL::to('/view-received-order')}}">Đơn hàng đã giao</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

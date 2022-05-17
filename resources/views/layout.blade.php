@@ -274,58 +274,58 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="widget widget_nav_menu">
-                                    <h3 class="widget-title">HOW TO BUY</h3>
+                                    <h3 class="widget-title">Cách mua hàng</h3>
                                     <ul>
                                         <li>
-                                            <a href="#">Contact Us</a>
+                                            <a href="#">Liên hệ</a>
                                         </li>
                                        
                                         <li>
-                                            <a href="#">Site Map</a>
+                                            <a href="#">Bản đồ</a>
                                         </li>
                                         <li>
-                                            <a href="#">Brands</a>
+                                            <a href="#">Thương hiệu</a>
                                         </li>
                                         <li>
-                                            <a href="#">Gift Vouchers</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="widget widget_nav_menu">
-                                    <h3 class="widget-title">MY ACCOUNT</h3>
-                                    <ul>
-                                        <li>
-                                            <a href="#">My Account</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Order History</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Wish List</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Specials</a>
+                                            <a href="#">Mã giảm giá</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
                                 <div class="widget widget_nav_menu">
-                                    <h3 class="widget-title">Infomation</h3>
+                                    <h3 class="widget-title">Tài khoản</h3>
                                     <ul>
                                         <li>
-                                            <a href="#">About Us</a>
+                                            <a href="#">Tài khoản của tôi</a>
                                         </li>
                                         <li>
-                                            <a href="#">Contact Us</a>
+                                            <a href="#">Lịch sử mua hàng</a>
                                         </li>
                                         <li>
-                                            <a href="#">Term & Conditions</a>
+                                            <a href="#">Yêu thích</a>
                                         </li>
                                         <li>
-                                            <a href="#">Privacy Policy</a>
+                                            <a href="#">Đặc biệt</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="widget widget_nav_menu">
+                                    <h3 class="widget-title">Thông tin</h3>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Chúng tôi</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Liên hệ</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Điều khoản & Điều kiện</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Chính sách bảo mật</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -37,6 +37,8 @@ Route::get('/customer-delete-order/{order_id}', [homeController::class, 'custome
 Route::get('/edit-customer-info/{customer_id}', [homeController::class, 'edit_customer_infor']);
 Route::post('/update-customer-info/{customer_id}', [homeController::class, 'update_customer_info']);
 Route::get('/customer-details-order/{order_id}', [homeController::class, 'customer_details_order']);
+Route::get('/customer-received-order/{order_id}', [homeController::class, 'customer_received_order']);
+
 //contact
 Route::get('/lien-he', [ContactController::class, 'lien_he'] );
 
@@ -119,4 +121,4 @@ Route::get('/view-order/{orderId}', [CheckoutController::class, 'view_order']);
 
 Route::get('/confirm-order/{orderId}', [CheckoutController::class, 'confirm_order']);
 Route::get('/view-confirm/{orderId}', [CheckoutController::class, 'view_confirm']); 
-
+Route::get('/view-received-order', [CheckoutController::class, 'view_received_order']); 

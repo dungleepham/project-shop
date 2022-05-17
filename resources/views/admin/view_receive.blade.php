@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Liệt kê đơn hàng</h4>
+                                <h4 class="card-title">Đơn hàng đã giao</h4>
 
                                 <?php
                                      $message = Session::get('message');
@@ -36,23 +36,17 @@
                                                 <th>Tên người đặt</th>
                                                 <th>Tổng giá tiền</th>
                                                 <th>Tình trạng</th>
-                                                <th>Xem đơn hàng</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                        @foreach($all_order as $key => $order)
+                                        @foreach($received_order as $key => $order)
                                             <tr>
                                                
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->customer_name}}</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}} VND</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>
                                                
-                                                <td>
-													<div class="d-flex">
-														<a href="{{URL::to('/view-order/'.$order->order_id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
-													</div>
-												</td>
                                             </tr>
                                         @endforeach    
 											

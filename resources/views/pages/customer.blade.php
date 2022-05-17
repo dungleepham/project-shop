@@ -51,7 +51,7 @@
                         <div class="profile card card-body px-3 pt-3 pb-0">
                             <div class="profile-head">
                                 <div class="photo-content">
-                                    <div class="cover-photo"><img src="public/frontend/img/background_cus.jpg" height="400px" width="   1950px"  alt=""> </div>
+                                    <div class="cover-photo"><img src="public/frontend/img/background_cus.jpg" height="400px" width="1970px"  alt=""> </div>
                                     
                                 </div>
                                 <div class="profile-info">
@@ -72,7 +72,7 @@
                                     @endforeach    
 									</div>
                                     <div class="bootstrap-badge" style="float:right">
-                                        <a href="{{URL::to('/trang-chu')}}" class="badge badge-info">Trở lại trang chủ</a>
+                                        <a href="{{URL::to('/trang-chu')}}" class="badge badge-secondary">Trở lại trang chủ</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,26 +108,36 @@
                                                         <th>Mã đơn hàng</th>
                                                         <th>Tổng giá tiền</th>
                                                         <th>Tình trạng</th>
-                                                        <th>Xem chi tiết đơn</th>
-                                                        <th>Xóa đơn hàng</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>                                                
                                                 @foreach($donhang as $key => $order)
                                                     <tr>                                               
                                                         <td><div> <span class="w-space-no" style="color:black">{{$order->order_id}}</span></div></td>
-                                                        <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}}</span></div></td>
+                                                        <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}} VND</span></div></td>
                                                         <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>  
                                                         <td>
                                                             <div class="d-flex">
-														        <a href="{{URL::to('/customer-details-order/'.$order->order_id)}}" class="badge badge-success">Xem đơn</a>
+														        <a href="{{URL::to('/customer-details-order/'.$order->order_id)}}" class="badge badge-info">Xem đơn</a>
 													        </div>
                                                         </td>
                                                         <td>
+                                                            @if($order->order_status == 'Đã đặt hàng')
 													        <div class="d-flex">
                                                                 <a onclick="return confirm('Bạn muốn xóa đơn hàng này?')" href="{{URL::to('/customer-delete-order/'.$order->order_id)}}" class="badge badge-danger">Xóa đơn</i></a>
 													        </div>
+                                                            @endif
 												        </td>
+                                                        <td>
+                                                            @if($order->order_status != 'Đã nhận được hàng')
+                                                            <div class="d-flex">
+														        <a href="{{URL::to('/customer-received-order/'.$order->order_id)}}" class="badge badge-success">Đã nhận đơn</a>
+													        </div>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 @endforeach    
                                                 </tbody>

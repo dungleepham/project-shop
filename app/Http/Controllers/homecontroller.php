@@ -91,6 +91,14 @@ class homecontroller extends Controller
 
     }
 
+    public function customer_received_order($order_id){
+        DB::table('tbl_order')
+        ->where('tbl_order.order_id', $order_id)
+        ->update(['order_status'=>'Đã nhận được hàng']);
+
+        return redirect::to('customer');
+    }
+
 
     public function customer_delete_order($order_id){
 

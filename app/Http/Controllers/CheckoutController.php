@@ -267,6 +267,19 @@ class CheckoutController extends Controller
         return view('admin_layout')->with('admin.view_confirm', $manager_order_by_id);
     }
 
+    public function view_received_order(){
+        $this->AuthLogin();
+        $received_order = DB::table('tbl_order')
+        ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+        ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã nhận được hàng')
+        ->orderby('tbl_order.order_id', 'asc')->get();
+
+        $manager_received_order = view('admin.view_receive')->with('received_order', $received_order);
+
+        
+        return view('admin_layout')->with('admin.view_receive', $manager_received_order);
+
+    }
 
    
 

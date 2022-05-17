@@ -118,7 +118,7 @@
                                             <tr>
                                                 <td>Mã đơn hàng: {{$values->order_id}}</td>
                                                 <td>&nbsp;</td>
-                                                <td>Tổng Tiền: {{$total}}</td>
+                                                <td>Tổng Tiền: {{$total}} VND</td>
                                             </tr>
 											
                                         </tbody>
