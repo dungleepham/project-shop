@@ -6,14 +6,18 @@
 
     <title>Nội thất Tiến Đạt</title>
 
+     <script type='text/javascript' src="{{asset('public/frontend/js/jquery.min.js')}}"></script>
     <link href="{{asset('public/frontend/css/bootstrap.min.css')}}" rel="stylesheet" type='text/css'>
-    <link href="{{asset('public/frontend/fonts/font-awesome/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>
-    <link href="{{asset('public/frontend/fonts/lovelo/stylesheet.css')}}" rel='stylesheet' type='text/css'>
-    <link href="{{asset('public/frontend/css/main.css')}}" rel='stylesheet' type='text/css'>
+    <link href="{{asset('public/frontend/font/font-awesome/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+   
     <link href="{{asset('public/frontend/css/owl.carousel.css')}}" rel='stylesheet' type='text/css'>
     <link href="{{asset('public/frontend/css/owl.theme.css')}}" rel='stylesheet' type='text/css'>
     <link href="{{asset('public/frontend/rs-plugin/css/settings.css')}}" rel="stylesheet" type='text/css'>
+    <link href="{{asset('public/frontend/rs-plugin/css/settings-ie8.css')}}" rel="stylesheet" type='text/css'>
     <link href="{{asset('public/frontend/css/custom.css')}}" rel="stylesheet" type='text/css'>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+   
     <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet" type='text/css'>
  
 
@@ -128,6 +132,8 @@
             <!--Start main menu -->
             <nav class="tz-menu-primary">
                 <div class="container">
+
+                
                 <?php
                     $content = Cart::content();
 
@@ -175,6 +181,7 @@
                     <ul class="tz-ecommerce-meta pull-right">
                         <li class="tz-mini-cart">
                             <a href="{{URL::to('/show-cart')}}"> Giỏ hàng </a>
+                            <div id="Customer"></div>
 
                             <!--Mini cart-->
                             <ul class="cart-inner">
@@ -355,30 +362,23 @@
     </div>
     <!--End class site-->
 
-    <script type='text/javascript' src="{{asset('public/frontend/js/jquery.min.js')}}"></script>
+    
     <script type='text/javascript' src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
-    <script type='text/javascript' src="{{asset('public/frontend/js/off-canvas.js')}}"></script>    <!--jQuery Countdow-->
+    <script type='text/javascript' src="{{asset('public/frontend/js/off-canvas.js')}}"></script>    
     <script type='text/javascript' src="{{asset('public/frontend/js/jquery.plugin.min.js')}}"></script>
-    <script type='text/javascript' src="{{asset('public/frontend/js/jquery.countdown.min.js')}}"></script>    <!--End Countdow-->
+    <script type='text/javascript' src="{{asset('public/frontend/js/jquery.countdown.min.js')}}"></script> 
     <script type='text/javascript' src="{{asset('public/frontend/js/jquery.parallax-1.1.3.js')}}"></script>
     <script type='text/javascript' src="{{asset('public/frontend/js/owl.carousel.js')}}"></script>
-    <script type='text/javascript' src="{{asset('public/frontend/js/custom.js')}}"></script>
+    <!-- <script type='text/javascript' src="{{asset('public/frontend/js/custom.js')}}"></script> -->
     <script type='text/javascript' src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
     <script type='text/javascript' src="{{asset('public/frontend/rs-plugin/js/jquery.themepunch.tools.min.js')}}"></script>
     <script type='text/javascript' src="{{asset('public/frontend/rs-plugin/js/jquery.themepunch.revolution.min.js')}}"></script>
     <script type='text/javascript' src="{{asset('public/frontend/rs-plugin/js/custom-rs.js')}}"></script>
     
     <script type="text/javascript">
-            $(document).ready(function(){
-                $('#orderby').on('change', function(){
-                    var url = $(this).val();
-                    alert(url);
-                    //if(url){
-                    //    window.location = url;
-                    //}
-                    //return false;
-                });
-            });
+        $(document).ready(function(){
+            
+        });
     </script>
 
 </body>

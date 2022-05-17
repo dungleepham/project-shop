@@ -213,7 +213,7 @@ input {
 
 .tz-title-black {
     font-size: 30px;
-    font-family: 'loveloblack';
+    font-family: 'Roboto';
     font-weight: normal;
     line-height: 30px;
     text-transform: uppercase;
@@ -5055,7 +5055,7 @@ blockquote {
     }
     .tz-title-black {
         font-size: 24px;
-        font-family: 'loveloblack';
+        font-family: 'Roboto';
         font-weight: normal;
         line-height: 30px;
         text-transform: uppercase;
