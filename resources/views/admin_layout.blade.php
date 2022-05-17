@@ -225,7 +225,7 @@
                 data: {
                     labels: data.labels,
                     datasets: [{
-                        label: '# of Votes',
+                        label: 'Số đơn hàng',
                         data: data.series,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',

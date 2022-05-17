@@ -51,7 +51,7 @@
                         <div class="profile card card-body px-3 pt-3 pb-0">
                             <div class="profile-head">
                                 <div class="photo-content">
-                                    <div class="cover-photo"><img src="public/frontend/img/background_cus.jpg" height="400px" width="1750px"  alt=""> </div>
+                                    <div class="cover-photo"><img src="public/frontend/img/background_cus.jpg" height="400px" width="   1950px"  alt=""> </div>
                                     
                                 </div>
                                 <div class="profile-info">
