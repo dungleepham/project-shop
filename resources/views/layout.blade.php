@@ -191,7 +191,7 @@
                                             </span>
                                         </span>
                                     </div>
-                                    <span class="mini-cart-delete"><a href="{{URL::to('/delete-to-cart-home/'.$v_content->rowId)}}"><img src="public/frontend/img/delete.png" alt="delete"></a></span>
+                                    <span class="mini-cart-delete"><a href="{{URL::to('/delete-to-cart-home/'.$v_content->rowId)}}"><img src="{{asset('public/frontend/img/delete.png')}}" alt="delete"></a></span>
                                 </li>
                                  @endforeach
                                 <li class="mini-subtotal">
