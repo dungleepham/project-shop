@@ -7,6 +7,7 @@
 
 <?php
 $content = Cart::content();
+$ajax_content = Session::get('cart');
 ?>
 <div id="order_review">
     <h3>Đơn hàng của bạn</h3>
@@ -20,16 +21,23 @@ $content = Cart::content();
             </tr>
         </thead>
         <tbody>
-            @foreach($content as $v_content)
+            @php
+            $total = 0;
+            @endphp
+            @foreach($ajax_content as $key => $v_content)
             <tr class="cart_item">
                 <td style="float:left">
-                <a href="{{URL::to('chi-tiet-san-pham/'.$v_content->id)}}"> {{$v_content->name}} </a>
+                <a href="{{URL::to('chi-tiet-san-pham/'.$v_content['product_id'])}}"> {{$v_content['product_name']}} </a>
                 </td>
                 <td class="product-quantity">
-                    <span class="amount">x {{$v_content->qty}}</span>
+                    <span class="amount">x {{$v_content['product_quantity']}}</span>
                 </td>
                 <td style="float:right">
-                    <span style="color:red" class="amount"> <?php $subtotal = $v_content->price * $v_content->qty; echo number_format($subtotal).' '.'VND'; ?></span>
+                    <span style="color:red" class="amount"> <?php $subtotal = $v_content['product_price'] * $v_content['product_quantity']; echo number_format($subtotal).' '.'VND'; ?></span>
+                    <?php
+                        $total = $total + $subtotal;
+                       
+                    ?>
                 </td>                           
             </tr>
             <!-- <td class="actions" colspan="6">
@@ -40,7 +48,8 @@ $content = Cart::content();
         <tfoot>
             <tr class="order-total">
                 <th>Tổng tiền</th><td ></td>
-                <td ><strong><span class="amount"> {{(Cart::subtotal()).' '.'VND'}}</span></strong> </td>
+                
+                <td ><strong><span class="amount"> {{number_format($total).' '.'VND'}}</span></strong> </td>
             </tr>
         </tfoot>
     </table>

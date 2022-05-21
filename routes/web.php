@@ -95,12 +95,27 @@ Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'show_d
 
 
 //cart
-Route::post('/save-cart', [CartController::class, 'save_cart']);
+//Route::post('/save-cart', [CartController::class, 'save_cart']);
 Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
 Route::get('/show-cart', [CartController::class, 'show_cart']); 
 Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']); 
 Route::get('/delete-to-cart-home/{rowId}', [CartController::class, 'delete_to_cart_home']); 
 
+// ------------------------------------------------------------------------------------------
+// Cart ajax
+
+Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax']);
+Route::get('/show-cart-ajax', [CartController::class, 'show_cart_ajax']); 
+Route::post('/update-cart', [CartController::class, 'update_cart']);
+Route::get('/delete-cart-product/{session_id}', [CartController::class, 'delete_cart_product']); 
+Route::get('/delete-all-product', [CartController::class, 'delete_all_product']); 
+Route::get('/load-cart-ajax', [CartController::class, 'load_cart_ajax']); 
+
+
+
+
+
+// ------------------------------------------------------------------------------------------
 
 //checkout
 Route::get('/login-checkout', [CheckoutController::class, 'login_checkout']); 

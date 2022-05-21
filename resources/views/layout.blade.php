@@ -59,6 +59,7 @@
                     </ul>
                    <ul class="pull-right">
                    <?php $customer_id = Session::get('customer_id');
+                   
                         if($customer_id != NULL){
                             ?>
                         <li class="tz-header-login">
@@ -87,7 +88,7 @@
                                 }
                             ?>
                         <li>
-                            <a href="{{URL::to('/show-cart')}}">Giỏ Hàng</a>
+                            <a href="{{URL::to('/show-cart-ajax')}}">Giỏ Hàng</a>
                         </li>
                         <?php $customer_id = Session::get('customer_id');
                         if($customer_id != NULL){
@@ -136,6 +137,10 @@
                 
                 <?php
                     $content = Cart::content();
+                    
+                    $ajax_content = Session::get('cart');
+                    
+
 
                 ?>
                     <!--Main Menu-->
@@ -180,35 +185,42 @@
                     <!--Shop meta-->
                     <ul class="tz-ecommerce-meta pull-right">
                         <li class="tz-mini-cart">
-                            <a href="{{URL::to('/show-cart')}}"> Giỏ hàng </a>
+                            <a href="{{URL::to('/show-cart-ajax')}}"> Giỏ hàng </a>
                             <div id="Customer"></div>
 
                             <!--Mini cart-->
                             <ul class="cart-inner">
-                                 @foreach($content as $v_content)
+                            @if(Session::get('cart') == true )  
+                                <?php
+                                    $total = 0;
+                                    ?>
+                                 @foreach($ajax_content as $key => $v_content)
+                                 <?php
+                                    $total = $total + $v_content['product_quantity'] * $v_content['product_price'];
+                                 ?>
                                 <li class="mini-cart-content">
                                
-                                    <div class="mini-cart-img"><img src="{{URL::to('public/upload/products/'.$v_content->options->image)}}" alt="product search one"></div>
+                                    <div class="mini-cart-img"><img src="{{URL::to('public/upload/products/'.$v_content['product_image'])}}" alt="product search one"></div>
                                     <div class="mini-cart-ds">
-                                        <h6><a href="{{URL::to('chi-tiet-san-pham/'.$v_content->id)}}">{{$v_content->name}}</a></h6>
+                                        <h6><a href="{{URL::to('chi-tiet-san-pham/'.$v_content['product_id'])}}">{{$v_content['product_name']}}</a></h6>
                                         <span class="mini-cart-meta">
-                                            <a href="{{URL::to('chi-tiet-san-pham/'.$v_content->id)}}">{{number_format($v_content->price).' '.'VND'}} </a>
+                                            <a href="{{URL::to('chi-tiet-san-pham/'.$v_content['product_id'])}}">{{number_format($v_content['product_price']).' '.'VND'}} </a>
                                             <span class="mini-meta">
-                                               <span class="mini-qty">{{$v_content->qty}}</span>
+                                               <span class="mini-qty">Số Lượng: {{$v_content['product_quantity']}}</span>
                                             </span>
                                         </span>
                                     </div>
-                                    <span class="mini-cart-delete"><a href="{{URL::to('/delete-to-cart-home/'.$v_content->rowId)}}"><img src="{{asset('public/frontend/img/delete.png')}}" alt="delete"></a></span>
+                                    <span class="mini-cart-delete"><a href="{{URL::to('/delete-cart-product/'.$v_content['session_id'])}}"><img src="{{asset('public/frontend/img/delete.png')}}" alt="delete"></a></span>
                                 </li>
                                  @endforeach
                                 <li class="mini-subtotal">
                                     <span class="subtotal-content">
                                         Tạm tính
-                                        <strong class="pull-right"> {{(Cart::subtotal()).' '.'VND'}}</strong>
+                                        <strong class="pull-right"> {{number_format($total).' '.'VND'}}</strong>
                                     </span>
                                 </li>
                                 <li class="mini-footer">
-                                    <a href="{{URL::to('/show-cart')}}" class="view-cart">giỏ hàng</a>
+                                    <a href="{{URL::to('/show-cart-ajax')}}" class="view-cart">giỏ hàng</a>
                                     <?php
                                 $customer_id = Session::get('customer_id');
                                 $shipping_id = Session::get('shipping_id');
@@ -220,10 +232,12 @@
                                 <?php
                                 }elseif($customer_id == NULL && $shipping_id == NULL){
                                 ?>
-                                <a href="{{URL::to('/register')}}" class="check-out">Thanh toán</a>
+                                <a href="{{URL::to('/login-checkout')}}" class="check-out">Thanh toán</a>
                                 <?php
                                 }
                                 ?>
+                               
+                                @endif
                             </ul>
                             <!--End mini cart-->
 
@@ -377,9 +391,65 @@
     
     <script type="text/javascript">
         $(document).ready(function(){
-            
+            $('.add_cart').click(function(){
+                var id = $(this).data('id');
+                var cart_product_id = $('.cart_product_id_' + id).val();
+                var cart_product_name = $('.cart_product_name_' + id).val();
+                var cart_product_image = $('.cart_product_image_' + id).val();
+                var cart_product_price = $('.cart_product_price_' + id).val();
+                var cart_product_quantity = $('.cart_product_quantity_' + id).val();
+                var _token = $('input[name = "_token"]').val();
+                
+                $.ajax({
+                        url:' {{url('/add-cart-ajax')}}',
+                        method: 'POST',
+                        dataType: 'JSON',
+                        data: { cart_product_id:cart_product_id, 
+                                cart_product_name:cart_product_name,
+                                cart_product_image:cart_product_image,
+                                cart_product_price:cart_product_price,
+                                cart_product_quantity:cart_product_quantity,
+                                _token:_token} , 
+                                success:function(data){
+                                if(data.error==0){    
+                                    swal({
+                                        title: "",
+                                        text: "Đã thêm vào giỏ", 
+                                        type: "success",
+                                        timer: 1e3,
+                                        showConfirmButton: !1
+                                    })
+                                }else{
+                                    swal({
+                                        title: "Số lượng tồn không đủ",
+                                        icon: "warning",
+                                        button: "OK",
+                                        });
+                                }
+                              
+                            }
+
+                });
+
+
+            });
         });
     </script>
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#orderby').on('change',function(){
+                var url = $(this).val();
+                // alert(url);
+                if (url) {
+                    window.location = url;
+
+                }
+            return false;
+           
+            });
+        });
+</script>
 
 </body>
 </html>

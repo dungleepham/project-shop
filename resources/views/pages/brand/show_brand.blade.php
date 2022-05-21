@@ -17,23 +17,7 @@
                             @endforeach
                             </li>
                         </ul>
-                    <!--    <div class="catalog-meta">
-                            <div class="catalog_top">
-                                <span class="style-switch">
-                                    <a class="nav-grid-view fa fa-th-large active"></a>
-                                    <a class="nav-list-view fa fa-list"></a>
-                                </span>
-                                <form class="shop-order">
-                                    <label class="form-arrow">
-                                        <select name="orderby" class="orderby">
-                                            <option value="'">Sắp xếp: Giá tăng dần</option>
-                                            <option value="rating">Sắp xếp: Giá giảm dần</option>
-                                            <option value="date">Sắp xếp: sản phẩm mới nhất</option>
-                                        </select>
-                                    </label>
-                                </form>
-                            </div>
-                        </div>-->
+                        
 
                         <div class="tz-product row grid-eff">
                             <!--Product item-->
@@ -52,10 +36,27 @@
                             
                         </h2>
                                 </div>
-                                <hr>
+                        <div class="catalog-meta">
+                            <div class="catalog_top">
+                                <form class="shop-order">
+                                    @csrf
+                                    <label class="form-arrow" >
+                                        <select id="orderby" name="orderby" class="orderby">
+                                            <option value="{{Request::url()}}?sort_by=none"> Xếp theo </option>
+                                            <option value="{{Request::url()}}?sort_by=asc"> Giá tăng dần </option>
+                                            <option value="{{Request::url()}}?sort_by=desc"> Giá giảm dần </option>
+                                            <option value="{{Request::url()}}?sort_by=az"> Tên: A - Z </option>
+                                            <option value="{{Request::url()}}?sort_by=za"> Tên: Z - A </option>
+                                        </select>
+                                    </label>
+                                </form>
+                            </div>
+                        </div>
+
+                        <hr>
                             <!--End tab header-->
                             <!--Tab content-->
-                                        <div class="tab-content">
+                    <div class="tab-content">
                             <!--Tab item-->
                         <div class="tab-pane active" id="one_read">
                             <div class="row">

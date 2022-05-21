@@ -106,11 +106,52 @@ class CategoryProductcontroller extends Controller
 
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
+          
         $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
         ->where('tbl_product.category_id', $category_id)->Paginate(4);
+
         $category_name = DB::table('tbl_category_product')->where('tbl_category_product.category_id', $category_id)->limit(1)->get();
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            
+            if($sort_by == 'desc'){
+                $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
+                ->where('tbl_product.category_id', $category_id)
+                ->orderBy('product_price', 'DESC')->Paginate(4)->appends(request()->query());
+               
+            }
+            elseif($sort_by == 'asc'){
+                $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
+                ->where('tbl_product.category_id', $category_id)->orderBy('product_price', 'ASC')->Paginate(4)->appends(request()->query());
+            }
+            elseif($sort_by == 'az'){
+                $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
+                ->where('tbl_product.category_id', $category_id)->orderBy('product_name', 'ASC')->Paginate(4)->appends(request()->query());
+            }
+            elseif($sort_by == 'za'){
+                $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
+                ->where('tbl_product.category_id', $category_id)->orderBy('product_name', 'DESC')->Paginate(4)->appends(request()->query());
+            }
+
+            else{
+                $category_by_id = DB::table('tbl_product')->join('tbl_category_product', 'tbl_product.category_id','=','tbl_category_product.category_id')
+                ->where('tbl_product.category_id', $category_id)->orderBy('category_id', 'ASC');
+            }
+
+
+        }
+        
+      
+        
+
+        
+       
+        
         return view('pages.category.show_category')->with('category', $cate_product)->with('brand', $brand_product)
         ->with('category_by_id', $category_by_id)->with('category_name', $category_name);
+    
+        
     }
 
     

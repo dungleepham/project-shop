@@ -14,6 +14,7 @@
                 </li>
             </ul>
 
+         
            
             <!--End Breadcrumbs-->
             @foreach($details_product as $key => $value)
@@ -45,17 +46,21 @@
                                 {{$value->product_desc}}
                             </p>
                         </div>
-                        <form class="tz_variations_form " action="{{URL::to('/save-cart')}}" method="POST">
-                            {{csrf_field()}}
-                            <p class="form-attr">
+                        <form class="tz_variations_form ">
+                            @csrf
+                            <p class="form-attr" >
                                 <span class="tzqty">
                                     <label>Số lượng</label>
-                                    <input type="number" step="1" min="1" name="qty" value="1" class="input-text qty text" size="4">
-                                    <input type="hidden"  name="productid_hidden" value="{{$value->product_id}}">
+                                    <input type="hidden"   value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
+                                    <input type="hidden"   value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
+                                    <input type="hidden"   value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
+                                    <input type="hidden"   value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
+                                    <input type="number" step="1" min="1" name="qty" value="1" class="cart_product_quantity_{{$value->product_id}}" size="4">
+                                    <!-- <input type="hidden"  name="productid_hidden" value="{{$value->product_id}}"> -->
                                 </span>
                             </p>
                             <p>
-                                <button type="submit" class="single_add_to_cart_button"> Thêm vào giỏ hàng </button>
+                                <button type="button" data-id="{{$value->product_id}}" class="single_add_to_cart_button add_cart" name="add_cart"> Thêm vào giỏ hàng </button>
                             </p>
                         </form>
                     </div>

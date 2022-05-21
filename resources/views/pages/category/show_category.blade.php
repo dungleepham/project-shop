@@ -12,31 +12,14 @@
                             <li>
                                 <a href="{{URL::to('/trang-chu')}}">Trang chủ</a>
                             </li>
+                            
                             <li class="current">
                                 @foreach($category_name as $key => $name)
                                 {{($name->category_name)}}
                                 @endforeach
                             </li>
                         </ul>
-                    <!--    <div class="catalog-meta">
-                            <div class="catalog_top">
-                                <span class="style-switch">
-                                    <a class="nav-grid-view fa fa-th-large active"></a>
-                                    <a class="nav-list-view fa fa-list"></a>
-                                </span>
-                                <form class="shop-order">
-                                    <label class="form-arrow" >
-                                        <select id="orderby" name="orderby" class="orderby">
-                                            <option value="{{Request::url()}}?sort_by=none"> Sắp xếp theo </option>
-                                            <option value="{{Request::url()}}sort_by=asc"> Sắp xếp theo: Giá tăng dần </option>
-                                            <option value="{{Request::url()}}sort_by=desc"> Sắp xếp theo: Giá giảm dần </option>
-                                            <option value="{{Request::url()}}sort_by=az"> Sắp xếp theo tên: A - Z </option>
-                                            <option value="{{Request::url()}}sort_by=za"> Sắp xếp theo tên: Z - A </option>
-                                        </select>
-                                    </label>
-                                </form>
-                            </div>
-                        </div>-->
+                      
 
                         <div class="tz-product row grid-eff">
                             <!--Product item-->
@@ -45,27 +28,43 @@
                                 <div class="container">
                             <!--Tabs Shop-->
                                     <div class="tz-shortcode-tabs">
-
                             <!--Tabs Header-->
                                         <div class="tz-tabs-header">
-                            <h2 class="tz-tabs-title pull-left">
-                            @foreach($category_name as $key => $name)
-                                {{($name->category_name)}}
-                            @endforeach
-                            </h2>
-                       
+                                            <h2 class="tz-tabs-title pull-left">
+                                            @foreach($category_name as $key => $name)
+                                                {{($name->category_name)}}
+                                            @endforeach
+                                            </h2>
+                                        </div>
+                        <div class="catalog-meta">
+                            <div class="catalog_top">
+                                <form class="shop-order">
+                                    @csrf
+                                    <label class="form-arrow" >
+                                        <select id="orderby" name="orderby" class="orderby">
+                                            <option value="{{Request::url()}}?sort_by=none"> Xếp theo </option>
+                                            <option value="{{Request::url()}}?sort_by=asc"> Giá tăng dần </option>
+                                            <option value="{{Request::url()}}?sort_by=desc"> Giá giảm dần </option>
+                                            <option value="{{Request::url()}}?sort_by=az"> Tên: A - Z </option>
+                                            <option value="{{Request::url()}}?sort_by=za"> Tên: Z - A </option>
+                                        </select>
+                                    </label>
+                                </form>
+                            </div>
                         </div>
+
                         <hr>
                             <!--End tab header-->
                             <!--Tab content-->
-                                        <div class="tab-content">
+                        <div class="tab-content">
                             <!--Tab item-->
                         <div class="tab-pane active" id="one_read">
                             <div class="row">
                                  @foreach($category_by_id as $key => $product)
-                                <div class="col-md-6 col-sm-6">
+                                <div class="product-item col-md-6 col-sm-6">
                                     <!--Start product item-->
                                     <div class="product-item">
+                                        
                                         <a href = "{{URL::to('chi-tiet-san-pham/'.$product->product_id)}}">
                                             <div class="product-thubnail">
                                                 <img src="{{URL::to('public/upload/products/'.$product->product_image)}}" alt="product" />

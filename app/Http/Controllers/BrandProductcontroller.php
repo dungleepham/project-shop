@@ -103,6 +103,36 @@ class BrandProductcontroller extends Controller
         $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
         ->where('tbl_product.brand_id', $brand_id)->Paginate(4);
         $brand_name = DB::table('tbl_brand_product')->where('tbl_brand_product.brand_id', $brand_id)->limit(1)->get();
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            
+            if($sort_by == 'desc'){
+                $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
+                ->where('tbl_product.brand_id', $brand_id)
+                ->orderBy('product_price', 'DESC')->Paginate(4)->appends(request()->query());
+            }
+            elseif($sort_by == 'asc'){
+                $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
+                ->where('tbl_product.brand_id', $brand_id)->orderBy('product_price', 'ASC')->Paginate(4)->appends(request()->query());
+            }
+            elseif($sort_by == 'az'){
+                $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
+                ->where('tbl_product.brand_id', $brand_id)->orderBy('product_name', 'ASC')->Paginate(4)->appends(request()->query());
+            }
+            elseif($sort_by == 'za'){
+                $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
+                ->where('tbl_product.brand_id', $brand_id)->orderBy('product_name', 'DESC')->Paginate(4)->appends(request()->query());
+            }
+
+            else{
+                $brand_by_id = DB::table('tbl_product')->join('tbl_brand_product', 'tbl_product.brand_id','=','tbl_brand_product.brand_id')
+                ->where('tbl_product.brand_id', $brand_id)->orderBy('brand_id', 'ASC');
+            }
+
+
+        }
+
         return view('pages.brand.show_brand')->with('category', $cate_product)->with('brand', $brand_product)->with('brand_by_id', $brand_by_id)
         ->with('brand_name', $brand_name);
     }

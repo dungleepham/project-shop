@@ -71,6 +71,7 @@
                                     <span class="amount"> <?php $subtotal = $v_content->price * $v_content->qty; echo number_format($subtotal).' '.'VND'; ?></span>
                                 </td>                           
                             </tr>
+                           
                             <!-- <td class="actions" colspan="6">
                                 
                             </td>--> 
@@ -90,7 +91,7 @@
                     <div class="thanhtoan">
                         <div class="thanhtoan-inner">
                             <ul>
-                            <li>Tổng tiền <span> {{(Cart::subtotal()).' '.'VND'}} </li>
+                            <li>Tổng tiền <span>  </li>
                             </ul>
                              <?php $customer_id = Session::get('customer_id');
                                     $shipping_id = Session::get('shipping_id');

@@ -14,6 +14,17 @@ session_start();
 
 class CheckoutController extends Controller
 {
+
+    public function PaymentLogin(){
+        $checkout_id = Session::get('customer_id');
+        if($checkout_id){
+            return redirect::to('/payment');
+        }
+        else{
+            return redirect::to('/login-checkout');
+        }
+    }
+
     public function login_checkout(){
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
@@ -44,6 +55,7 @@ class CheckoutController extends Controller
     }
 
     public function checkout(){
+        $this->PaymentLogin();
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
         return view('pages.checkout.show_checkout')->with('category', $cate_product)->with('brand', $brand_product);
@@ -52,6 +64,7 @@ class CheckoutController extends Controller
    
 
     public function payment(){
+        $this->PaymentLogin();
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
         return view('pages.checkout.payment')->with('category', $cate_product)->with('brand', $brand_product);
@@ -113,6 +126,7 @@ class CheckoutController extends Controller
 
     public function order_place(request $REQUEST){
 
+        $ajax_content = Session::get('cart');
         //GET PAYMENT METHOD
         $data = array();
         $now = Carbon::now('Asia/Ho_Chi_Minh');
@@ -123,37 +137,41 @@ class CheckoutController extends Controller
         $payment_id = DB::table('tbl_payment')->insertGetId($data);
 
         //insert order
+
         
         $order_data = array();
         $order_data['customer_id'] = Session::get('customer_id');
         $order_data['shipping_id'] = Session::get('shipping_id');
         $order_data['payment_id'] = $payment_id;
-        $order_data['order_total'] = Cart::subtotal();
+        $order_data['order_total'] = 0;
         $order_data['order_status'] = 'Đã đặt hàng';
         $order_data['created_at'] = $now;
         $order_data['updated_at'] = $now;
         $order_id = DB::table('tbl_order')->insertGetId($order_data);
 
         //insert order details
-        $content = Cart::content();
-        foreach($content as $v_content){
-        $order_details_data = array();
-        $order_details_data['order_id'] = $order_id;
-        $order_details_data['product_id'] = $v_content->id;
-        $order_details_data['product_name'] = $v_content->name;
-        $order_details_data['product_price'] = $v_content->price;
-        $order_details_data['product_quantity'] = $v_content->qty;
-        $order_details_data['created_at'] = $now;
-        $order_details_data['updated_at'] = $now;
-        DB::table('tbl_order_details')->insert($order_details_data);
+        $total = 0;
+        foreach($ajax_content as $key => $v_content)
+        {   $total += $v_content['product_price']*$v_content['product_quantity'];
+            $order_details_data = array();
+            $order_details_data['order_id'] = $order_id;
+            $order_details_data['product_id'] = $v_content['product_id'];
+            $order_details_data['product_name'] = $v_content['product_name'];
+            $order_details_data['product_price'] = $v_content['product_price'];
+            $order_details_data['product_quantity'] = $v_content['product_quantity'];
+            $order_details_data['created_at'] = $now;
+            $order_details_data['updated_at'] = $now;
+            $result = DB::table('tbl_order_details')->insert($order_details_data);
+            
+        }
+        if($result){
+            DB::table('tbl_order')->where('order_id', $order_id)->update(['order_total'=> $total]);
+            Session::put('cart', null);
+            $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
+            $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
+            return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);
         }
 
-        if( $data['payment_method'] == 'TienMat'){
-           Cart::destroy();
-           $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
-           $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
-           return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);
-        }
     }
 
 
