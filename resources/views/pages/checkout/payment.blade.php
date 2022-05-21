@@ -21,6 +21,7 @@ $ajax_content = Session::get('cart');
             </tr>
         </thead>
         <tbody>
+            @if(Session::get('cart') == true )  
             @php
             $total = 0;
             @endphp
@@ -44,14 +45,22 @@ $ajax_content = Session::get('cart');
                 
             </td>--> 
             @endforeach
+           
         </tbody>
+        
         <tfoot>
             <tr class="order-total">
                 <th>Tổng tiền</th><td ></td>
                 
                 <td ><strong><span class="amount"> {{number_format($total).' '.'VND'}}</span></strong> </td>
             </tr>
+            
         </tfoot>
+            @else
+            <span style="font-size: 20px; font-weight:300; color:red">
+                Không có sản phẩm
+            @endif
+
     </table>
     <!--End shop table-->
     <!--Start payment-->

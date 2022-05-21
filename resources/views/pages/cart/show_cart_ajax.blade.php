@@ -55,7 +55,7 @@
 
                     <!--Table body-->
                     <tbody>
-                     @if(Session::get('cart') == true )  
+                    @if(Session::get('cart') == true )  
                     @php
                         $total = 0;
                     @endphp
