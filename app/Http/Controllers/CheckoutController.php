@@ -6,9 +6,11 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Session;
+use PDF;
 use Illuminate\Support\Facades\Redirect;
 use DB;
 use Carbon\Carbon;
+
 session_start();
 
 
@@ -297,6 +299,121 @@ class CheckoutController extends Controller
         
         return view('admin_layout')->with('admin.view_receive', $manager_received_order);
 
+    }
+
+
+    public function print_order($orderId){
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_order_convert($orderId));
+        return $pdf->stream();
+    }
+
+    public function print_order_convert($orderId){
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $data=array();
+        $order_by_id = DB::table('tbl_order')
+        ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+        ->where('tbl_order.order_id', $orderId)
+        ->get();
+        
+        $order_detail = DB::table('tbl_order')
+        ->join('tbl_order_details','tbl_order.order_id', '=', 'tbl_order_details.order_id')
+        ->where('tbl_order.order_id', $orderId)
+        ->get();
+
+        
+        
+    
+       
+        $output = '';
+        $output .= '<style>
+        body{
+                font-family: Dejavu Sans;
+        }
+        table{
+            border: 1px, solid black;
+            border-collapse: collapse;
+            
+        }
+        table , tr, th, td{
+            border: 1px, solid black;
+            padding: 8px;
+            margin 10px;
+        }
+        </style>
+        <div>
+                    <h2 > Cửa hàng nội thất Tiến Đạt </h2>
+                   
+        </div>
+         
+            <span>Địa chỉ: Khóm 4, Thị trấn Cái Nhum, huyện Mang Thít, tỉnh Vĩnh Long</span>
+            <br>
+            <span>Số điện thoại: 0964618627 </span>
+            <br><br><br>
+
+            <h1 style="color:red"> <center> Hóa đơn bán hàng </center> </h1>';
+            foreach($order_by_id as $key => $val){
+            $output .= '
+            <p>Tên khách hàng:  '.$val->customer_name.'</p>
+            <p>Địa chỉ:  '.$val->customer_address.'  </p>
+            <p>Số điện thoại:  '.$val->customer_phone.' </p> <br><br><br>';
+            }
+            $output .= '
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:5%" >STT</th>
+                        <th style="width:40%" >Tên Sản Phẩm</th>
+                        <th style="width:15%" >Số Lượng</th>
+                        <th style="width:15%" >Đơn Giá</th>
+                        <th style="width:25%" >Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody>';
+                $tong = 0;
+                $now = Carbon::now('Asia/Ho_Chi_Minh');
+                foreach($order_detail as $key => $value){
+                $tong += $value->product_price * $value->product_quantity;
+                $output .= '
+                    <tr>
+                        <td style="text-align: center"> '.++$key.' </td>
+                        <td> '.$value->product_name.'</td>
+                   
+                        <td style="text-align: center">'.$value->product_quantity.' </td>
+
+                        <td style="text-align: center">'.number_format($value->product_price).' VND </td>
+
+                        <td style="text-align: center">'.number_format($value->product_price * $value->product_quantity).' VND </td>
+                                            
+                    </tr>
+                    
+                    
+                    '; }
+                    $output .= '
+                        <td colspan="2">Tổng cộng: </td>  
+                          
+                          
+                        <td colspan="3" style="text-align: center" >'. number_format($tong).' VND </td>  
+                        
+                </tbody>
+                
+            </table>';
+
+            $output .= '
+                    <p>Thành tiền: (Bằng chữ).................................................................................................
+                    ...................................................................................................................................... </a><br><br>
+                    <span style="float:right">Ngày '.$now->day.' Tháng '.$now->month.' năm '.$now->year.' </span><br><br>
+
+                    <span style="margin-left: 15px; font-size:20px">Khách Hàng</span> 
+                    <span style="float:right; font-size: 20px">Người Bán Hàng</span> 
+            ';
+
+
+
+        
+            
+         
+      return $output;
     }
 
    

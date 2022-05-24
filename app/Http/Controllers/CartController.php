@@ -104,16 +104,20 @@ class CartController extends Controller
                     }
                 }
         }else{
-            $cart[] = array(
-                'session_id' => $session_id,
-                'product_name' => $data['cart_product_name'],
-                'product_id' => $data['cart_product_id'],
-                'product_image' => $data['cart_product_image'],
-                'product_quantity' => $data['cart_product_quantity'],
-                'product_price' => $data['cart_product_price'],
-
-            );
-            Session::put('cart', $cart);
+            if($data['cart_product_quantity']<=$slton){
+                    $cart[] = array(
+                    'session_id' => $session_id,
+                    'product_name' => $data['cart_product_name'],
+                    'product_id' => $data['cart_product_id'],
+                    'product_image' => $data['cart_product_image'],
+                    'product_quantity' => $data['cart_product_quantity'],
+                    'product_price' => $data['cart_product_price'],
+                );
+                Session::put('cart', $cart);
+            }else{
+                $notification['error']=1;
+            }
+            
         }
         
         Session::save();

@@ -124,6 +124,9 @@
                                         </tbody>
                                         
                                     </table>
+                                    <div style="float:left">
+                                        <a target = "_blank" href="{{url('/print-order/'.$values->order_id)}}"  class="badge badge-info" style="padding: 15px 25px">In đơn hàng</a>
+                                    </div>
                                     <div style="float:right">
                                         <a href="{{URL::to('/confirm-order/'.$order_id)}}"  class="badge badge-success" style="padding: 15px 25px">Xác nhận đơn hàng</a>
                                     </div>

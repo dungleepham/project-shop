@@ -421,9 +421,11 @@
                                     })
                                 }else{
                                     swal({
-                                        title: "Số lượng tồn không đủ",
-                                        icon: "warning",
-                                        button: "OK",
+                                        title: "",
+                                        text: "Số lượng tồn không đủ", 
+                                        type: "error",
+                                        timer: 1e3,
+                                        showConfirmButton: !1
                                         });
                                 }
                               

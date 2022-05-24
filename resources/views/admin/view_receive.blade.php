@@ -36,6 +36,7 @@
                                                 <th>Tên người đặt</th>
                                                 <th>Tổng giá tiền</th>
                                                 <th>Tình trạng</th>
+                                                <th>In hóa đơn</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,7 +47,9 @@
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->customer_name}}</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}} VND</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>
-                                               
+                                                <td>
+                                                    <a target = "_blank" href="{{url('/print-order/'.$order->order_id)}}"  class="badge badge-info" style="padding: 15px 25px">In đơn hàng</a>
+                                                </td>
                                             </tr>
                                         @endforeach    
 											

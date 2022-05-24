@@ -49,6 +49,7 @@
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>
                                                
                                                 <td>
+                                                
 													<div class="d-flex">
 														<a href="{{URL::to('/view-confirm/'.$order->order_id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
 													</div>

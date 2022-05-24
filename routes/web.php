@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -131,8 +132,10 @@ Route::post('/order-place', [CheckoutController::class, 'order_place']);
 
 //manage order
 Route::get('/manage-order', [CheckoutController::class, 'manage_order']); 
+Route::get('/print-order/{orderId}', [CheckoutController::class, 'print_order']); 
 Route::get('/view-confirm-order', [CheckoutController::class, 'view_confirm_order']); 
 Route::get('/view-order/{orderId}', [CheckoutController::class, 'view_order']); 
+
 
 Route::get('/confirm-order/{orderId}', [CheckoutController::class, 'confirm_order']);
 Route::get('/view-confirm/{orderId}', [CheckoutController::class, 'view_confirm']); 
