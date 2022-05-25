@@ -10,7 +10,7 @@
                     <a href="{{URL::to('/trang-chu')}}">Trang chủ</a>
                 </li>
                 <li class="current">
-                    Category
+                Chi tiết sản phẩm
                 </li>
             </ul>
 

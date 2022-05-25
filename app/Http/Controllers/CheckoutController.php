@@ -364,7 +364,7 @@ class CheckoutController extends Controller
                     <tr>
                         <th style="width:5%" >STT</th>
                         <th style="width:40%" >Tên Sản Phẩm</th>
-                        <th style="width:15%" >Số Lượng</th>
+                        <th style="width:15%" >SL</th>
                         <th style="width:15%" >Đơn Giá</th>
                         <th style="width:25%" >Thành Tiền</th>
                     </tr>
