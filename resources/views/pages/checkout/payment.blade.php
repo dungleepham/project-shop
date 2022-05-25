@@ -78,8 +78,7 @@ $ajax_content = Session::get('cart');
             </li>
             
             </li>
-
-            <button style="float:right" class="update-cart-qty" type="submit" name="send_order">Đặt hàng</button>
+            <button style="float:right" class="update-cart-qty" type="submit" name="send_order"<?php if(count($ajax_content)==0) echo "Disabled" ?>>Đặt hàng</button>
             </form>
         </ul>
 

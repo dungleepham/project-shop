@@ -20,7 +20,6 @@ class CheckoutController extends Controller
     public function PaymentLogin(){
         $checkout_id = Session::get('customer_id');
         if($checkout_id){
-            return redirect::to('/payment');
         }
         else{
             return redirect::to('/login-checkout');
@@ -127,7 +126,7 @@ class CheckoutController extends Controller
     }
 
     public function order_place(request $REQUEST){
-
+        $this->PaymentLogin();
         $ajax_content = Session::get('cart');
         //GET PAYMENT METHOD
         $data = array();
@@ -140,7 +139,6 @@ class CheckoutController extends Controller
 
         //insert order
 
-        
         $order_data = array();
         $order_data['customer_id'] = Session::get('customer_id');
         $order_data['shipping_id'] = Session::get('shipping_id');

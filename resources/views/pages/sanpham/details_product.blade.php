@@ -100,7 +100,6 @@
 
         <div class="recommended_items"><!--recommended_items-->
 						<h2 class="title text" style="padding-left:30px">Sản phẩm liên quan</h2>
-						
 						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
 								<div class="item active">	

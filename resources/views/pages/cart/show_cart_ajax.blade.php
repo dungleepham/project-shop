@@ -95,12 +95,9 @@
                             </td>--> 
                      @endforeach
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td style= "float:center; font-size: 20px; font-weight:300; ">Tổng tiền: </td>
-                                <td><span style="font-size: 20px; font-weight:300; color:red"> {{number_format($total,0,',','.')}} VND </td>
+                                
+                                <td colspan="5" style= "float:center; font-size: 20px; font-weight:300; ">Tổng tiền: </td>
+                                <td colspan="1"><span style="font-size: 20px; font-weight:300; color:red"> {{number_format($total,0,',','.')}} VND </td>
                             </tr>
                             
                      
