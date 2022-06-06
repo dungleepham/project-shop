@@ -16,8 +16,7 @@
             <!--End Breadcrumbs-->
             <h1 class="page-title">Giỏ hàng</h1>
 
-
-            <?php
+                        <?php
                             $message = Session::get('message');
                             if($message) {
                             echo '<span class="alert alert-success alert-dismissible fade show">'
@@ -31,23 +30,16 @@
             <form action= "{{url('/update-cart')}}" method="POST">
                 {{ csrf_field() }}
                 <table class="shop_table cart">
-                    <colgroup>
-						<col span="1" style="width: 10%">
-						<col span="1" style="width: 15%">
-						<col span="1" style="width: 30%">
-						<col span="1" style="width: 15%">
-						<col span="1" style="width: 15%">
-						<col span="1" style="width: 15%">
-					</colgroup>
+                   
                     <!--Table header-->
                     <thead>
                         <tr>
-                            <th class="product-remove" scope="col">&nbsp;</th>
-                            <th class="product-thumbnail" scope="col">Sản phẩm</th>
-                            <th class="product-name" scope="col">Tên sản phẩm</th>
-                            <th class="product-price" scope="col">Giá</th>
-                            <th class="product-quantity" scope="col">Số lượng</th>
-                            <th class="product-subtotal" scope="col">Thành Tiền</th>
+                            <th class="product-remove">&nbsp;</th>
+                            <th class="product-thumbnail">Sản phẩm</th>
+                            <th class="product-name">&nbsp;</th>
+                            <th class="product-price">Giá</th>
+                            <th class="product-quantity">Số lượng</th>
+                            <th class="product-subtotal">Thành Tiền</th>
                             
                         </tr>
                     </thead>
@@ -61,30 +53,26 @@
                     @endphp
                    
                         @foreach(Session::get('cart') as $key => $cart)
-                        @php
-                            $total = $total + $cart['product_quantity'] * $cart['product_price'];
-                        @endphp
+                            @php
+                                $total = $total + $cart['product_quantity'] * $cart['product_price'];
+                            @endphp
 
                             <tr class="cart_item">
                                 <td class="product-remove">
                                     <a href="{{url('/delete-cart-product/'.$cart['session_id'])}}" class="remove" title="Xóa sản phẩm này"></a>
                                 </td>
                                 <td class="product-thumbnail">
-                                    <a href=""><img src="{{asset('public/upload/products/'.$cart['product_image'])}}" width = "70" height = "70" /></a>
+                                    <a href="#"><img src="{{asset('public/upload/products/'.$cart['product_image'])}}" width = "70" height = "70" /></a>
                                 </td>
-
                                 <td class="product-name">
-                                    <a href=""> {{$cart['product_name']}} </a>
+                                    <a href="#"> {{$cart['product_name']}} </a>
                                 </td>
                                 <td class="product-price">
                                     <span class="amount"> {{number_format($cart['product_price'],0,',','.')}} VND </span>
                                 </td>
-                               
-                                    <td class="product-quantity">
+                                <td class="product-quantity">
                                     <div class="quantity"><input type="number" min="0" name="cart_quantity[{{$cart['session_id']}}]" value="{{$cart['product_quantity']}}" title="Số lượng" class="input-text qty text" size="4"></div>
-                                   
-                                    </td>
-                             
+                                </td>                             
                                 <td class="product-subtotal">
                                     <span class="amount"> {{number_format($cart['product_quantity'] * $cart['product_price'] , 0,',','.')}} VND   </span>
                                 </td>                           
@@ -93,22 +81,18 @@
                             <!-- <td class="actions" colspan="6">
                                 
                             </td>--> 
-                     @endforeach
+                        @endforeach
                             <tr>
-                                
-                                <td colspan="5" style= "float:center; font-size: 20px; font-weight:300; ">Tổng tiền: </td>
-                                <td colspan="1"><span style="font-size: 20px; font-weight:300; color:red"> {{number_format($total,0,',','.')}} VND </td>
+                                <td colspan="2" style= "float:center; font-size: 20px; font-weight:300; ">Tổng tiền: </td>
+                                <td colspan="2"><span style="font-size: 20px; font-weight:300; color:red"> {{number_format($total,0,',','.')}} VND </td>
                             </tr>
                             
                      
                             <tr>
+                                <!-- <td colspan="1"><a href="{{url('/delete-all-product')}}" class="checkoutCustom">Xóa</a></td> -->
                                
-                                <td>&nbsp;</td>
-                                <td><a href="{{url('/delete-all-product')}}" class="checkoutCustom" style="width: 200px">Xóa tất cả sản phẩm</a></td>
-                                <td>&nbsp;</td>
-                                <td><button class="update-cart-qty" type="submit" style="width: 200px">Cập nhật số lượng</button></td>
-                                <td>&nbsp;</td> 
-                                <td> <?php $customer_id = Session::get('customer_id');
+                                <td colspan="2"><button class="update-cart-qty" type="submit" style="width: 180px">Cập nhật số lượng</button></td>
+                                <td colspan="3"> <?php $customer_id = Session::get('customer_id');
                                     $shipping_id = Session::get('shipping_id');
                                     if($customer_id == NULL && $shipping_id != NULL){
                                     ?>
@@ -120,8 +104,8 @@
                                     }else { ?>                                           
                                     <a href="{{URL::to('/login-checkout')}}" class="checkoutCustom">Thanh Toán</a>
                                     <?php }
-                                    ?></td>
-                                
+                                    ?>
+                                </td>
                             </tr>
                             @else 
                             <tr >
@@ -138,9 +122,6 @@
               </form>
         
             <!--End form table-->
-
-          
-           
         </div>
     </section>
 

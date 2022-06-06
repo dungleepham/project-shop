@@ -3223,12 +3223,14 @@ input {
 }
 
 .checkoutCustom {
-    float: center;
+    margin: 10px;
+    width: 150px;
+    text-align: center;
     background: #212121;
     color: #ffffff;
     text-transform: uppercase;
-    padding: 10px 20px 10px;
-    display: inline-block;
+    padding: 10px 18px 10px;
+    display: block;
     border: 0;
     border-radius: 2px;
     font-size: 14px;
