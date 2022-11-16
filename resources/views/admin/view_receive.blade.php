@@ -25,14 +25,23 @@
                                          Session::put('message', null);
                                      }
                                  ?>
-                                
+                                <li class="nav-item">
+								<div class="input-group search-area d-xl-inline-flex d-none">
+                                <form action="">
+									<input type="text" name = "search" class="form-control" placeholder="Tìm kiếm đơn hàng">
+                                </form>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="flaticon-381-search-2"></i></a></span>
+                                    </div>
+								</div>
+							</li>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-responsive-md">
                                         <thead>
                                             <tr>
-                                                
+                                                <th>ID Đơn hàng</th>
                                                 <th>Tên người đặt</th>
                                                 <th>Tổng giá tiền</th>
                                                 <th>Tình trạng</th>
@@ -43,7 +52,7 @@
 
                                         @foreach($received_order as $key => $order)
                                             <tr>
-                                               
+                                                <td><div> <span class="w-space-no" style="color:black">{{$order->order_id}}</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->customer_name}}</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_total}} VND</span></div></td>
                                                 <td><div> <span class="w-space-no" style="color:black">{{$order->order_status}}</span></div></td>

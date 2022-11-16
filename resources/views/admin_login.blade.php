@@ -42,12 +42,6 @@
 
                                         <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
-                                               <div class="custom-control custom-checkbox ml-1 text-white">
-													<input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
-													<label class="custom-control-label" for="basic_checkbox_1">Nhớ mật khẩu</label>
-												</div>
-                                            </div>
-                                            <div class="form-group">
                                                 <a class="text-white" href="page-forgot-password.html">Quên mật khẩu?</a>
                                             </div>
                                         </div>

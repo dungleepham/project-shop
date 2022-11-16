@@ -16,6 +16,11 @@
                         <label for="password">Mật khẩu mới</label>
                         <input class="input-text" type="password" name="password">
                     </p>
+                    <!-- <p class="form-row form-row-wide">
+                        <label for="password">Nhập lại mật khẩu</label>
+                        <input class="input-text" type="password" name="password">
+                    </p> -->
+
                     <p class="form-row form-row-wide">
                         <label for="name">Họ và tên</label>
                         <input type="text" class="input-text" name="name" value="">

@@ -357,7 +357,7 @@
                                     <div class="product-item">
                                         <a href="{{URL::to('chi-tiet-san-pham/'.$product->product_id)}}">
                                             <div class="product-thubnail">
-                                                <img src="{{URL::to('public/upload/products/'.$product->product_image)}}" alt="product 1" />
+                                                <img src="{{URL::to('public/upload/products/'.$product->product_image)}}"/>
                                                 <div class="product-meta">
                                                 </div>
                                             </div>

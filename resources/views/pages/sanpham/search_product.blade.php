@@ -1,8 +1,7 @@
 @extends('layout')
 @section('content')
 
- <!--SATRT REVOLUTION SLIDER-->
- <div id="rev_slider_1_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
+<div id="rev_slider_1_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
             <div id="rev_slider_1_1" class="rev_slider fullwidthabanner">
                 <ul>
                     <li data-transition="fade" data-slotamount="7" data-masterspeed="700"  data-saveperformance="off" >
@@ -134,7 +133,7 @@
                              data-elementdelay="0.1"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeOut"><a href='shop.html' class='buttom_bike'>Mua ngay</a>
+                             data-endeasing="Power4.easeOut">
                         </div>
                     </li>
                     <li data-transition="fade" data-slotamount="7" data-masterspeed="700"  data-saveperformance="off" >
@@ -167,7 +166,7 @@
                              data-splitout="none"
                              data-elementdelay="0.1"
                              data-endelementdelay="0.1"
-                             data-endspeed="300"><a href='shop.html' class='buttom_bike'>Mua ngay</a>
+                             data-endspeed="300">
                         </div>
                     </li>
                     <li data-transition="fade" data-slotamount="7" data-masterspeed="700"  data-saveperformance="off" >
@@ -299,7 +298,7 @@
                              data-elementdelay="0.1"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeOut"><a href='shop.html' class='buttom_bike'>Mua ngay</a>
+                             data-endeasing="Power4.easeOut">
                         </div>
                     </li>
                 </ul>
@@ -356,7 +355,7 @@
                                     <div class="product-item">
                                         <a href="{{URL::to('chi-tiet-san-pham/'.$product->product_id)}}">
                                             <div class="product-thubnail">
-                                                <img src="{{URL::to('public/upload/products/'.$product->product_image)}}" alt="product 1" />
+                                                <img src="{{URL::to('public/upload/products/'.$product->product_image)}}"/>
                                                 <div class="product-meta">
                                                 </div>
                                             </div>
@@ -374,7 +373,7 @@
                             </div>
                         </div>
                         <!--End tab item-->
-                        
+                      
                     </div>
                     <!--End tab content-->
                    
@@ -383,6 +382,7 @@
             </div>
         </div>
         <!--End section large top for tabs content-->
+       
         <!--Start parallax-->
         <section class="parallax background-parallax">
             <div class="container">

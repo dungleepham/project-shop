@@ -189,12 +189,24 @@ class CheckoutController extends Controller
     }
 
     //xem các đơn hàng chưa duyệt
-    public function manage_order(){
+    public function manage_order(Request $REQUEST){
         $this->AuthLogin();
-        $all_order = DB::table('tbl_order')
-        ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
-        ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã đặt hàng')
-        ->orderby('tbl_order.order_id', 'asc')->get();
+        
+        $search = $REQUEST['search'];
+        if($search != ""){
+            $all_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã đặt hàng')->where('tbl_order.order_id', '=' , $search)->orwhere('tbl_order.order_status', 'Đã đặt hàng')->where('tbl_customers.customer_name', 'LIKE' , "%$search%")
+            ->get();
+        }else{
+            $all_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã đặt hàng')
+            ->orderby('tbl_order.order_id', 'asc')->get();
+        }
+
+       
+        
         $manager_order = view('admin.manage_order')->with('all_order', $all_order);
         
         return view('admin_layout')->with('admin.manage_order', $manager_order);
@@ -240,13 +252,24 @@ class CheckoutController extends Controller
     }
 
     //xem đơn hàng đã xác nhận
-    public function view_confirm_order(){
+    public function view_confirm_order(Request $REQUEST){
         $this->AuthLogin();
-        $confirm_order = DB::table('tbl_order')
-        ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
-        ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã xác nhận')
-        ->orderby('tbl_order.order_id', 'asc')->get();
+        $search = $REQUEST['search'];
+        if($search != ""){
+            $confirm_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã xác nhận')->where('tbl_order.order_id', '=', $search)->orwhere('tbl_order.order_status', 'Đã xác nhận')->where('tbl_customers.customer_name', 'LIKE', "%$search%")
+            ->get();
+        }
+        else{
+            $confirm_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã xác nhận')
+            ->orderby('tbl_order.order_id', 'asc')->get();
+    
+        }
 
+        
         $manager_confirm_order = view('admin.confirm_order')->with('confirm_order', $confirm_order);
 
         
@@ -285,12 +308,26 @@ class CheckoutController extends Controller
         return view('admin_layout')->with('admin.view_confirm', $manager_order_by_id);
     }
 
-    public function view_received_order(){
+    public function view_received_order(Request $REQUEST){
         $this->AuthLogin();
-        $received_order = DB::table('tbl_order')
-        ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
-        ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã nhận được hàng')
-        ->orderby('tbl_order.order_id', 'asc')->get();
+
+        $search = $REQUEST['search'];
+        if($search != "")
+        {
+            $received_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã nhận được hàng')
+            ->where('tbl_order.order_id', '=', $search)->orwhere('tbl_order.order_status', 'Đã nhận được hàng')->where('tbl_customers.customer_name', 'LIKE', "%$search%")
+            ->get();
+        }
+        else{
+            $received_order = DB::table('tbl_order')
+            ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
+            ->select('tbl_order.*','tbl_customers.customer_name')->where('tbl_order.order_status', 'Đã nhận được hàng')
+            ->orderby('tbl_order.order_id', 'asc')->get();
+        }
+
+       
 
         $manager_received_order = view('admin.view_receive')->with('received_order', $received_order);
 

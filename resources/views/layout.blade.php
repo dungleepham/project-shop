@@ -46,17 +46,6 @@
             <div class="container">
                 <!--Start class header top-->
                 <div class="header-top">
-                    <ul class="pull-left">
-                        <li>
-                            <a href="javascript:void()">
-                                Việt Nam
-                                <span class="fa fa-angle-down tz-down"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void()">Liên hệ: 0964.618.627</a>
-                        </li>
-                    </ul>
                    <ul class="pull-right">
                    <?php $customer_id = Session::get('customer_id');
                    
@@ -109,7 +98,7 @@
 
                 <!--Start header content-->
                 <div class="header-content">
-                    <h3 class="tz-logo pull-left"><a href="{{URL::to('/trang-chu')}}"><img src="{{asset('public/frontend/img/logo.png')}}" alt="home" /></a></h3>
+                    <h3 class="tz-logo"><a href="{{URL::to('/trang-chu')}}"><img src="{{asset('public/frontend/img/logo.png')}}" alt="home" /></a></h3>
                     <div class="tz-search pull-right">
 
                         <!--Start form search-->
@@ -119,12 +108,6 @@
                             <button type="submit"></button>
                         </form>
                         <!--End Form search-->
-
-                        <!--live search-->
-                        <div class="live-search">
-                            
-                        </div>
-                        <!--End live search-->
                     </div>
                 </div>
                 <!--End class header content-->
