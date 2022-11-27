@@ -33,6 +33,55 @@ class ProductController extends Controller
        
     }
 
+    public function import_product(){
+        $this->AuthLogin();
+        $cate_product = DB::table('tbl_category_product')->orderby('category_id','asc')->get();
+        $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
+        $import_product = DB::table('tbl_product')->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
+        ->orderby('product_id','desc')->get();
+
+        return view('admin.import_product')->with('cate_product', $cate_product)
+        ->with('brand_product', $brand_product)->with('import_product', $import_product);
+       
+    }
+
+    public function save_import_product(Request $REQUEST){
+        $this->AuthLogin();
+        $data = $REQUEST->all();
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        
+        $total = 0;
+        for($i = 0; $i< $data['index']; $i++){
+            $total += $data['product_quantity'][$i] * $data['product_import_price'][$i];
+        }
+
+        $receipt = array();
+
+        $admin_id = Session::get('admin_id');
+
+        $receipt['id_staff'] = $admin_id;
+        $receipt['total'] = $total;
+        $receipt['created_at'] = $now;
+
+        $id_receipt = DB::table('tbl_receipt')->insertGetId($receipt);
+
+
+        $ds = array();
+        for($i = 0; $i< $data['index']; $i++){
+            $ds['id_receipt'] = $id_receipt;
+            $ds['product_id'] = $data['product_cate'][$i];
+            $ds['product_quantity'] = $data['product_quantity'][$i];
+            $ds['product_import_price'] = $data['product_import_price'][$i];
+            $ds['created_at'] = $now;
+
+            DB::table('tbl_receipt_details')->insert($ds);
+        }
+
+       
+        return redirect::to('/all-product');
+    }
+
     public function all_product(){
         $this->AuthLogin();
         $all_product = DB::table('tbl_product')
@@ -49,6 +98,7 @@ class ProductController extends Controller
         $now = Carbon::now('Asia/Ho_Chi_Minh');
         $data['product_name'] = $REQUEST->product_name;
         $data['product_price'] = $REQUEST->product_price;
+        $data['product_import_price'] = $REQUEST->product_import_price;
         $data['product_quantity'] = $REQUEST->product_quantity;
         $data['product_desc'] = $REQUEST->product_desc;
         $data['product_content'] = $REQUEST->product_content;

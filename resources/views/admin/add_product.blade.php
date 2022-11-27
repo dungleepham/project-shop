@@ -34,7 +34,13 @@
                                     </div>
                             </div> 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Giá sản phẩm</label>
+                                <label class="col-sm-3 col-form-label">Giá nhập sản phẩm</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="product_import_price">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Giá bán sản phẩm</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="product_price">
                                     </div>

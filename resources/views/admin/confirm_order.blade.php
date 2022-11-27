@@ -25,7 +25,7 @@
                                          Session::put('message', null);
                                      }
                                  ?>
-                                <li class="nav-item">
+                            <li class="nav-item">
 								<div class="input-group search-area d-xl-inline-flex d-none">
                                 <form action="">
 									<input type="text" name = "search" class="form-control" placeholder="Tìm kiếm đơn hàng">

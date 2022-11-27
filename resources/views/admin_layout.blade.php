@@ -141,6 +141,7 @@
                          <ul class="sub">
                             <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
 							<li><a href="{{URL::to('/all-product')}}">Liệt kê sản phẩm</a></li>
+                            <li><a href="{{URL::to('/import-product')}}">Nhập hàng</a></li>
                         </ul>
                     </li>
                 </ul>
