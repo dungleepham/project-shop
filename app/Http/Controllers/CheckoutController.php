@@ -57,18 +57,28 @@ class CheckoutController extends Controller
 
     public function checkout(){
         $this->PaymentLogin();
+        $customer_id = Session:: get('customer_id');
+
+        $shipping = DB::table('tbl_shipping')->where('customer_id', $customer_id)->get();
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
-        return view('pages.checkout.show_checkout')->with('category', $cate_product)->with('brand', $brand_product);
+        
+        return view('pages.checkout.show_checkout')->with('category', $cate_product)->with('brand', $brand_product)->with('shipping',$shipping);
     }
 
    
 
     public function payment(){
         $this->PaymentLogin();
+        $customer_id = Session:: get('customer_id');
+       
+
         $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
-        return view('pages.checkout.payment')->with('category', $cate_product)->with('brand', $brand_product);
+        $shipping = DB::table('tbl_shipping')->where('customer_id', $customer_id)->get();
+
+
+        return view('pages.checkout.payment')->with('category', $cate_product)->with('brand', $brand_product)->with('shipping', $shipping);
     }
 
     public function logout_checkout(){
@@ -83,14 +93,20 @@ class CheckoutController extends Controller
         $phone = $REQUEST->phone;
         $password = md5($REQUEST->password);
         $now = Carbon::now('Asia/Ho_Chi_Minh');
-        $result = DB::table('tbl_customers')->where('customer_phone', $phone)->where('customer_password', $password)->first();
+        $result = DB::table('tbl_customers')
+        ->where('customer_phone', $phone)->where('customer_password', $password)->first();
+
+       
+
         if($result){
             session::put('customer_id', $result->customer_id);
             session::put('customer_name', $result->customer_name);
             session::put('customer_address', $result->customer_address);
             session::put('customer_phone', $result->customer_phone);
+
+          
             
-            $shipping_data = array();
+           /* $shipping_data = array();
             $now = Carbon::now('Asia/Ho_Chi_Minh');
             $shipping_data['shipping_name'] = session::get('customer_name');
             $shipping_data['shipping_phone'] = $REQUEST->phone;
@@ -99,8 +115,7 @@ class CheckoutController extends Controller
             $hipping_data['updated_at'] = $now;
             $shipping_id = DB::table('tbl_shipping')->insertGetId($shipping_data);
             
-
-            session::put('shipping_id', $shipping_id);
+            session::put('shipping_id', $shipping_id);*/
 
             return redirect::to('/trang-chu');
         }else{
@@ -112,8 +127,10 @@ class CheckoutController extends Controller
 
     public function save_checkout_customer(request $REQUEST){
         $data = array();
+        $customer_id = Session::get('customer_id');
         $now = Carbon::now('Asia/Ho_Chi_Minh');
         $data['shipping_name'] = $REQUEST->name;
+        $data['customer_id'] = $customer_id;
         $data['shipping_phone'] = $REQUEST->phone;
         $data['shipping_notes'] = $REQUEST->notes;
         $data['shipping_address'] = $REQUEST->address;
@@ -128,6 +145,8 @@ class CheckoutController extends Controller
     public function order_place(request $REQUEST){
         $this->PaymentLogin();
         $ajax_content = Session::get('cart');
+
+        
         //GET PAYMENT METHOD
         $data = array();
         $now = Carbon::now('Asia/Ho_Chi_Minh');
@@ -141,7 +160,7 @@ class CheckoutController extends Controller
 
         $order_data = array();
         $order_data['customer_id'] = Session::get('customer_id');
-        $order_data['shipping_id'] = Session::get('shipping_id');
+        $order_data['shipping_address'] = $REQUEST->shipping_address;
         $order_data['payment_id'] = $payment_id;
         $order_data['order_total'] = 0;
         $order_data['order_status'] = 'Đã đặt hàng';
@@ -149,6 +168,7 @@ class CheckoutController extends Controller
         $order_data['updated_at'] = $now;
         $order_id = DB::table('tbl_order')->insertGetId($order_data);
 
+        
         //insert order details
         $total = 0;
         foreach($ajax_content as $key => $v_content)
@@ -167,12 +187,169 @@ class CheckoutController extends Controller
         if($result){
             DB::table('tbl_order')->where('order_id', $order_id)->update(['order_total'=> $total]);
             Session::put('cart', null);
-            $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
-            $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
-            return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);
+            // $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
+            // $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
+            
+            // return view('pages.checkout.handcash');//->with('category', $cate_product)->with('brand', $brand_product);
+            return redirect('/complete_checkout');
         }
 
     }
+
+    public function complete_checkout(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
+        $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
+        return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);;
+    }
+
+   
+    public function vnpay_payment(Request $REQUEST) {
+        $ajax_content = Session::get('cart');
+    
+        
+
+        $data = $REQUEST->all();
+       
+        $shipping_address = Session::put('addrs', $data['shipping_address']);
+        $total = 0;
+        foreach($ajax_content as $key => $v_content)
+        {   $total += $v_content['product_price']*$v_content['product_quantity'];
+
+        }
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = "http://localhost/shoplaravel/vnpay_return";
+        $vnp_TmnCode = "ZWHE76WJ";//Mã website tại VNPAY 
+        $vnp_HashSecret = "FINCWKGUYYBTEQVYJRPSKYCQUFYHXDQN"; //Chuỗi bí mật
+        
+        $vnp_TxnRef = rand(0,50000); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = 'Thanh toan don hang';
+        $vnp_OrderType = 'bill-payment';
+        $vnp_Amount = $total * 100;
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        //Add Params of 2.0.1 Version
+        //$vnp_ExpireDate = $_POST['txtexpire'];
+        //Billing
+        
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+           /* "vnp_ExpireDate"=>$vnp_ExpireDate,
+            "vnp_Bill_Mobile"=>$vnp_Bill_Mobile,
+            "vnp_Bill_Email"=>$vnp_Bill_Email,
+            "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
+            "vnp_Bill_LastName"=>$vnp_Bill_LastName,
+            "vnp_Bill_Address"=>$vnp_Bill_Address,
+            "vnp_Bill_City"=>$vnp_Bill_City,
+            "vnp_Bill_Country"=>$vnp_Bill_Country,
+            "vnp_Inv_Phone"=>$vnp_Inv_Phone,
+            "vnp_Inv_Email"=>$vnp_Inv_Email,
+            "vnp_Inv_Customer"=>$vnp_Inv_Customer,
+            "vnp_Inv_Address"=>$vnp_Inv_Address,
+            "vnp_Inv_Company"=>$vnp_Inv_Company,
+            "vnp_Inv_Taxcode"=>$vnp_Inv_Taxcode,
+            "vnp_Inv_Type"=>$vnp_Inv_Type*/
+        );
+        
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+        
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+        
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array('code' => '00'
+            , 'message' => 'success'
+            , 'data' => $vnp_Url);
+            return redirect($vnp_Url);
+        //     // vui lòng tham khảo thêm tại code demo
+    }
+
+    public function vnpay_return(Request $REQUEST){
+        
+       
+        $ajax_content = Session::get('cart');
+        $shipping_address = Session::get('addrs');
+
+        
+        $data = array();
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $data['payment_method'] = "online";
+        $data['payment_status'] = 'Đang xử lý';
+        $data['created_at'] = $now;
+        $data['updated_at'] = $now;
+        $payment_id = DB::table('tbl_payment')->insertGetId($data);
+
+        //insert order
+
+        $order_data = array();
+        $order_data['customer_id'] = Session::get('customer_id');
+        $order_data['shipping_address'] = $shipping_address;
+        $order_data['payment_id'] = $payment_id;
+        $order_data['order_total'] = 0;
+        $order_data['order_status'] = 'Đã đặt hàng';
+        $order_data['created_at'] = $now;
+        $order_data['updated_at'] = $now;
+        $order_id = DB::table('tbl_order')->insertGetId($order_data);
+
+         //insert order details
+         $total = 0;
+         foreach($ajax_content as $key => $v_content)
+         {   $total += $v_content['product_price']*$v_content['product_quantity'];
+             $order_details_data = array();
+             $order_details_data['order_id'] = $order_id;
+             $order_details_data['product_id'] = $v_content['product_id'];
+             $order_details_data['product_name'] = $v_content['product_name'];
+             $order_details_data['product_price'] = $v_content['product_price'];
+             $order_details_data['product_quantity'] = $v_content['product_quantity'];
+             $order_details_data['created_at'] = $now;
+             $order_details_data['updated_at'] = $now;
+             $result = DB::table('tbl_order_details')->insert($order_details_data);
+             
+         }
+         if($result){
+             DB::table('tbl_order')->where('order_id', $order_id)->update(['order_total'=> $total]);
+             Session::put('cart', null);
+            //  $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderby('category_id','asc')->get();
+            //  $brand_product = DB::table('tbl_brand_product')->where('brand_status', '1')->orderby('brand_id','desc')->get();
+             
+            //  return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);
+            return redirect('/complete_checkout');
+         }
+
+    }
+
 
 
 
@@ -217,7 +394,6 @@ class CheckoutController extends Controller
         $this->AuthLogin();
         $order_by_id = DB::table('tbl_order')
         ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
-        //->join('tbl_shipping','tbl_order.shipping_id','=','tbl_shipping.shipping_id')
         ->select('tbl_order.*','tbl_customers.*')->where('tbl_order.order_id', $orderId)->get();
         
         $order_details = DB::table('tbl_order_details')
@@ -230,6 +406,8 @@ class CheckoutController extends Controller
 
         return view('admin_layout')->with('admin.view_order', $manager_order_by_id);
     }
+
+
 
 
 

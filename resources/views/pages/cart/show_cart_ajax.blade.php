@@ -92,7 +92,7 @@
                                 <!-- <td colspan="1"><a href="{{url('/delete-all-product')}}" class="checkoutCustom">Xóa</a></td> -->
                                
                                 <td colspan="2"><button class="update-cart-qty" type="submit" style="width: 180px">Cập nhật số lượng</button></td>
-                                <td colspan="3"> <?php $customer_id = Session::get('customer_id');
+                             <!--    <td colspan="3"> <?php $customer_id = Session::get('customer_id');
                                     $shipping_id = Session::get('shipping_id');
                                     if($customer_id == NULL && $shipping_id != NULL){
                                     ?>
@@ -105,7 +105,20 @@
                                     <a href="{{URL::to('/login-checkout')}}" class="checkoutCustom">Thanh Toán</a>
                                     <?php }
                                     ?>
+                                </td>-->
+
+                                    <?php
+                                        if($customer_id == NULL){
+                                    ?>
+                                    <td colspan="3"> 
+                                        <a href="{{URL::to('/login-checkout')}}" class="checkoutCustom">Thanh Toán</a>
+                                    </td>
+
+                                <?php }else { ?>      
+                                <td colspan="3">
+                                <a href="{{URL::to('/payment')}}" class="checkoutCustom">Thanh Toán</a>
                                 </td>
+                                <?php } ?>
                             </tr>
                             @else 
                             <tr >

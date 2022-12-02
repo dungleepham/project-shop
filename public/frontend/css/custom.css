@@ -3222,6 +3222,38 @@ input {
     transition: all 0.4s ease 0s;
 }
 
+.btn-add-address {
+    float: center;
+    background: #108123;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 10px 20px 10px;
+    display: inline-block;
+    border: 0;
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 30px;
+    -webkit-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+.btn-add-address:hover {
+    float: center;
+    background: #1fd83e;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 10px 20px 10px;
+    display: inline-block;
+    border: 0;
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 30px;
+    -webkit-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
 .checkoutCustom {
     margin: 10px;
     width: 150px;
@@ -3294,6 +3326,7 @@ input {
 
 .coupon .input-text {
     height: 50px;
+    resize: none;
     border: 1px solid #e0e0e0;
     width: 95%;
     padding: 10px 15px;

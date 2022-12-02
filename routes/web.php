@@ -129,7 +129,9 @@ Route::post('/add-customer', [CheckoutController::class, 'add_customer']);
 Route::post('/login-customer', [CheckoutController::class, 'login_customer']);
 Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer']);
 Route::post('/order-place', [CheckoutController::class, 'order_place']);
-
+Route::post('/vnpay_payment', [CheckoutController::class, 'vnpay_payment']);
+Route::get('/vnpay_return', [CheckoutController::class, 'vnpay_return']); 
+Route::get('/complete_checkout', [CheckoutController::class, 'complete_checkout']); 
 
 //manage order
 Route::get('/manage-order', [CheckoutController::class, 'manage_order']); 

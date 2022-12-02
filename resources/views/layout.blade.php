@@ -64,8 +64,9 @@
                     
                         <?php
                                 $customer_id = Session::get('customer_id');
-                                $shipping_id = Session::get('shipping_id');
-                                if($customer_id != null && $shipping_id != NULL)
+                                //$shipping_id = Session::get('shipping_id');
+                                
+                                if($customer_id != null) // && $shipping_id != NULL)
                                 {
                             ?>
                                <li><a href="{{URL::to('/payment')}}">Thanh Toán</a></li>
@@ -206,14 +207,14 @@
                                     <a href="{{URL::to('/show-cart-ajax')}}" class="view-cart">giỏ hàng</a>
                                     <?php
                                 $customer_id = Session::get('customer_id');
-                                $shipping_id = Session::get('shipping_id');
-                                if($customer_id != NULL && $shipping_id != NULL) {
+                                //$shipping_id = Session::get('shipping_id');
+                                if($customer_id != NULL) {// && $shipping_id != NULL) {
                                     ?>
                                     <a href="{{URL::to('/payment')}}" class="check-out">Thanh Toán</a>
                                    
                                 </li>
                                 <?php
-                                }elseif($customer_id == NULL && $shipping_id == NULL){
+                                }elseif($customer_id == NULL){// && $shipping_id == NULL){
                                 ?>
                                 <a href="{{URL::to('/login-checkout')}}" class="check-out">Thanh toán</a>
                                 <?php
@@ -435,6 +436,20 @@
             });
         });
 </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6389b83fdaff0e1306da8f41/1gj8vfeun';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 
 </body>
 </html>

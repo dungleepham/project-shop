@@ -79,7 +79,7 @@
                                             <tr>
                                           
                                                 <td>{{$values->customer_name}}</td>
-                                                <td>{{$values->customer_address}}</td>
+                                                <td>{{$values->shipping_address}}</td>
                                                 <td>{{$values->customer_phone}}</td>
                                             </tr>
                                        

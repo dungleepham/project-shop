@@ -37,7 +37,7 @@
                                                 <div class="basic-form" id = "form1" style="margin-bottom: 10px">
                                                     <div class="form-row">
                                                         <label>chọn sản phẩm</label>
-                                                        <select name="product_cate[]" class="form-control default-select col-sm-4" id="sel1">
+                                                        <select name="product_cate[]" class="form-control default-select col-sm-3" id="sel1">
 
 
                                                         @foreach($import_product as $key => $import_pd)    
@@ -45,7 +45,7 @@
                                                         @endforeach    
                                                         </select>
                                                         <label  class="col-sm-1 col-form-label">Giá nhập vào</label>
-                                                        <input type="number" class="form-control col-sm-2" name="product_import_price[]">
+                                                        <input type="number" class="form-control col-sm-2"  name="product_import_price[]">
                                         
                                                         <label  class="col-sm-1 col-form-label">Số lượng nhập</label>
                                                         <input type="number" class="form-control col-sm-2" name="product_quantity[]">
@@ -59,9 +59,7 @@
                                         </div>
                                     </div>
                                 </div> 
-                            <input type="hidden" name="index" id = "i" value = "1">                   
-                          
-                                
+                            <input type="hidden" name="index" id = "i" value = "1">                           
                                    
                         </form>
                         <div class="form-group row">
@@ -71,7 +69,7 @@
                                     </div>
                         <div style="float:right ; margin: 10px" class="form-group row">
                                         <div class="col-sm-10">
-                                            <button name="add_product" type="submit" class="btn btn-primary save-recpt">Lưu phiếu nhập hàng</button>
+                                            <button name="add_product" type="submit" class="btn btn-primary save-recpt">Lưu </button>
                                         </div>
                                     </div>
                     </div>
@@ -88,7 +86,7 @@
                 event.preventDefault();
                 var i = $('#i').val();
                 var u = Number(i) + 1;
-                $('#receipt').append('<div class="basic-form" id = "form'+u+'" style="margin-bottom: 10px"> <div class="form-row"><label>chọn sản phẩm</label><select name="product_cate[]" class="form-control default-select col-sm-4" id="sel1"> @foreach($import_product as $key => $import_pd) <option value="{{$import_pd->product_id}}">{{$import_pd->product_name}}</option>@endforeach  </select><label class="col-sm-1 col-form-label">Giá nhập vào</label><input type="number" class="form-control col-sm-2" name="product_import_price[]"><label class="col-sm-1 col-form-label">Số lượng nhập</label><input type="number" class="form-control col-sm-2" name="product_quantity[]"><button class="col-sm-1 btn btn-danger remove-form" data-id = "'+u+'">Xóa</button> </div> </div> ');
+                $('#receipt').append('<div class="basic-form" id = "form'+u+'" style="margin-bottom: 10px"> <div class="form-row"><label>chọn sản phẩm</label><select name="product_cate[]" class="form-control default-select col-sm-3" id="sel1"> @foreach($import_product as $key => $import_pd) <option value="{{$import_pd->product_id}}">{{$import_pd->product_name}}</option>@endforeach  </select><label class="col-sm-1 col-form-label">Giá nhập vào</label><input type="number" class="form-control col-sm-2" name="product_import_price[]"><label class="col-sm-1 col-form-label">Số lượng nhập</label><input type="number" class="form-control col-sm-2" name="product_quantity[]"><button class="col-sm-1 btn btn-danger remove-form" data-id = "'+u+'">Xóa</button> </div> </div> ');
                 $('#i').val(u);
             });
 
