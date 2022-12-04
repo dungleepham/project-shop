@@ -205,8 +205,6 @@ class CheckoutController extends Controller
    
     public function vnpay_payment(Request $REQUEST) {
         $ajax_content = Session::get('cart');
-    
-        
 
         $data = $REQUEST->all();
        

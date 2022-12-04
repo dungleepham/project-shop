@@ -103,13 +103,19 @@
                     <div class="tz-search pull-right">
 
                         <!--Start form search-->
-                        <form action="{{URL::to('/tim-kiem')}}" method="POST">
+                        <form action="{{URL::to('/tim-kiem')}}" method="POST" id="form-search">
                            {{ csrf_field()}}
+                           
                             <input type="text" class="tz-query" id="tz-query" name="keywords_submit" value="" placeholder="Tìm kiếm sản phẩm">
-                            <button type="submit"></button>
+                            <button type="submit" ></button>
+                           
+                            <i class = "fa fa-microphone" id="voice-search"></i> 
+                           
                         </form>
+                        
                         <!--End Form search-->
                     </div>
+                   
                 </div>
                 <!--End class header content-->
             </div>
@@ -436,6 +442,34 @@
             });
         });
 </script>
+
+<!--voice search-->
+
+<script>
+    let mic = document.getElementById('voice-search');
+    const search = document.querySelector(".tz-query");
+    const formSearch = document.querySelector("#form-search");
+    const searchInput = search.querySelector('#tz-query'); 
+    
+
+    mic.onclick = ()=>{
+        mic.classList.add('record');
+        let recognization = new webkitSpeechRecognition;
+        recognization.lang = 'vi';
+        recognization.start();
+        recognization.onresult = e=>{
+            const result1 = event.results[0][0].transcript;
+           // alert(result1);
+            document.getElementById("tz-query").value = result1;
+            formSearch.submit();
+            mic.classList.remove('record');
+        }
+    }
+
+</script>
+
+
+
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">

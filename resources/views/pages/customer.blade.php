@@ -93,6 +93,10 @@
                                         <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#profile1"><i class="la la-user mr-2"></i>Thông tin cá nhân</a>
                                         </li>
+                                        <!-- <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#profile1"><i class="la la-user mr-3"></i>Đánh giá sản phẩm</a>
+                                        </li>
+                                         -->
                                         
                                     </ul>
 
@@ -173,7 +177,24 @@
                                             </div>
                                         </div>
                                         
-                                    
+                                        <!-- <div class="tab-pane fade" id="#danhgiasp">
+                                            <div class="pt-4">                                               
+                                                <table class="table table-responsive-md">
+                                                    <thead>
+                                                        <tr>                                                            
+                                                            <th>ID Đơn hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Đánh giá sao</th>
+                                                            <th>&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                
+                                                   
+                                                    </tbody>
+                                                </table>
+                                       
+                                            </div>
+                                        </div> -->
                     
                                     </div>
                                 </div>
@@ -220,7 +241,7 @@
     <!-- Required vendors -->
     <script src="{{asset('public/backend/vendor/global/global.min.js')}}"></script>
 	<script src="{{asset('public/backend/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
-	<script src="{{asset('public/backend/vendor/chart.js/Chart.bundle.min.js')}}"></script>
+	<!-- <script src="{{asset('public/backend/vendor/chart.js/Chart.bundle.min.js')}}"></script> -->
     <script src="{{asset('public/backend/js/custom.min.js')}}"></script>
 	<script src="{{asset('public/backend/js/deznav-init.js')}}"></script>
 	<script src="{{asset('public/backend/vendor/owl-carousel/owl.carousel.js')}}"></script>
@@ -229,10 +250,10 @@
     <script src="{{asset('public/backend/vendor/peity/jquery.peity.min.js')}}"></script>
 	
 	<!-- Apex Chart -->
-	<script src="{{asset('public/backend/vendor/apexchart/apexchart.js')}}"></script>
+	<!-- <script src="{{asset('public/backend/vendor/apexchart/apexchart.js')}}"></script> -->
 	
 	<!-- Dashboard 1 -->
-	<script src="{{asset('public/backend/js/dashboard/dashboard-1.js')}}"></script>
+	<!-- <script src="{{asset('public/backend/js/dashboard/dashboard-1.js')}}"></script> -->
 	
 	<script>
 		function carouselReview(){
