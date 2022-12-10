@@ -37,7 +37,7 @@
                              data-splitout="none"
                              data-elementdelay="0.1"
                              data-endelementdelay="0.1"
-                             data-endspeed="300"><a href="{{URL::to('/trang-chu')}}" class='checkoutCustom'>QUAY VỀ TRANG CHỦ</a>
+                             data-endspeed="300"><a href="{{URL::to('/trang-chu')}}" class='checkoutCustom'>TRANG CHỦ</a>
                         </div>
                     </li>
                 </ul>

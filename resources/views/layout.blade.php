@@ -38,6 +38,15 @@
     //echo $shipping_id;
 
     ?>
+
+<?php
+                    $content = Cart::content();
+                    
+                    $ajax_content = Session::get('cart');
+                    
+
+
+                ?>
     <!--Start class site-->
     <div class="tz-site">
 
@@ -67,11 +76,11 @@
                                 //$shipping_id = Session::get('shipping_id');
                                 
                                 if($customer_id != null) // && $shipping_id != NULL)
-                                {
+                                { if(Session::get('cart') == true){
                             ?>
                                <li><a href="{{URL::to('/payment')}}">Thanh Toán</a></li>
                             <?php
-                                }else{
+                                }}else{
                             ?>
                             <li class="tz-header-login"><a href="{{URL::to('/login-checkout')}}">Thanh Toán</a></li>
                             <?php
